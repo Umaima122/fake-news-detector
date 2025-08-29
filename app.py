@@ -14,7 +14,7 @@ def load_model():
 
 model, vectorizer = load_model()
 
-# Prediction function
+# ------------------ Prediction function ------------------
 def predict_news(news_text: str) -> bool:
     try:
         input_data = vectorizer.transform([news_text])
@@ -28,11 +28,11 @@ def predict_news(news_text: str) -> bool:
 st.set_page_config(
     page_title="Fake News Detector",
     page_icon="📰",
-    layout="wide",   # ✅ better for phones
+    layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# ------------------ Custom CSS for Professional Look ------------------
+# ------------------ Custom CSS ------------------
 st.markdown(
     """
     <style>
@@ -115,12 +115,14 @@ if st.button("🔍 Analyze"):
     elif model is None or vectorizer is None:
         st.error("❌ Model not loaded. Please check deployment.")
     else:
-        with st.spinner("Analyzing... ⏳"):
+        with st.spinner("Analyzing news, please wait... ⏳"):
             result = predict_news(user_input)
             if result is True:
                 st.markdown("<div class='result-box real'>✅ Real News – This article seems genuine.</div>", unsafe_allow_html=True)
             elif result is False:
                 st.markdown("<div class='result-box fake'>🚨 Fake News – This article may be misleading.</div>", unsafe_allow_html=True)
+            else:
+                st.error("❌ Prediction failed. Please try again or check the model.")
 
 # ------------------ Examples ------------------
 st.subheader("🎯 Try Examples")
@@ -131,23 +133,29 @@ with col1:
         example_text = "Economic growth rises by 2.3% in the third quarter, according to official government statistics."
         st.info(example_text)
         res = predict_news(example_text)
-        if res: 
+        if res is True:
             st.success("✅ Real News")
-        else:
+        elif res is False:
             st.error("🚨 Fake News")
+        else:
+            st.error("❌ Prediction failed")
 
 with col2:
     if st.button("Example: Fake News"):
         example_text = "Breaking: New study confirms consuming chocolate cures diabetes overnight!"
         st.info(example_text)
         res = predict_news(example_text)
-        if res:
+        if res is True:
             st.success("✅ Real News (unexpected)")
-        else:
+        elif res is False:
             st.error("🚨 Fake News")
+        else:
+            st.error("❌ Prediction failed")
 
 # ------------------ Footer ------------------
 st.markdown("---")
-st.caption("Made with  using Streamlit & Scikit-learn | Optimized for Mobile 📱")
+st.caption("Made with ❤️ using Streamlit & Scikit-learn | Optimized for Mobile 📱")
+
+
 
 
