@@ -1,7 +1,7 @@
 import streamlit as st
 import joblib
 
-# ------------------ Load model safely with caching ------------------
+# ------------------ Load model safely ------------------
 @st.cache_resource
 def load_model():
     try:
@@ -28,167 +28,176 @@ def predict_news(news_text: str) -> bool:
 st.set_page_config(
     page_title="Fake News Detector",
     page_icon="📰",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
-# ------------------ Custom CSS for Full-page Modern UI ------------------
+# ------------------ CSS Styling ------------------
 st.markdown(
     """
     <style>
-    /* Import clean modern font */
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
-    html, body, [class*="css"]  {
-        font-family: 'Poppins', sans-serif;
-        background: url("https://img.freepik.com/free-vector/abstract-dark-blue-wave-background_53876-111548.jpg") no-repeat center center fixed;
+    .stApp {
+        background: url("mimi.png") no-repeat center center fixed;
         background-size: cover;
-        color: #ffffff;
+        font-family: 'Roboto', sans-serif;
+        color: #f0f0f0;
+        overflow-x: hidden;
     }
 
-    /* Titles */
+    .main-container {
+        background-color: rgba(0, 0, 0, 0.65);
+        border-radius: 15px;
+        padding: 30px;
+        margin: 30px auto;
+        max-width: 1000px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+
     .main-title {
         text-align: center;
         font-size: 2.6em;
-        font-weight: 600;
-        margin-bottom: 10px;
+        font-weight: 700;
         color: #ffffff;
+        margin-bottom: 10px;
     }
     .subtitle {
         text-align: center;
         font-size: 1.2em;
-        font-weight: 300;
-        color: #dcdcdc;
-        margin-bottom: 35px;
+        font-weight: 400;
+        color: #d0d0d0;
+        margin-bottom: 25px;
     }
 
-    /* Input box */
     textarea {
         border-radius: 10px !important;
-        border: none !important;
+        border: 1px solid #cccccc !important;
         font-size: 15px !important;
-        padding: 15px !important;
-        background: rgba(255,255,255,0.1) !important;
-        color: #ffffff !important;
+        padding: 12px !important;
+        background-color: #1c1c1c;
+        color: #ffffff;
     }
-    textarea::placeholder {
-        color: #cccccc !important;
+    textarea:focus {
+        border-color: #1a73e8 !important;
+        box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2) !important;
     }
 
-    /* Buttons */
     div.stButton > button {
-        background: linear-gradient(90deg, #1a73e8, #0059b3);
-        color: #ffffff;
+        background-color: #1a73e8;
+        color: white;
         border-radius: 8px;
         padding: 12px 25px;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 500;
         border: none;
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     div.stButton > button:hover {
-        background: linear-gradient(90deg, #0059b3, #003d80);
-        transform: scale(1.03);
+        background-color: #1669c1;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
-    /* Result Box */
     .result-box {
         text-align: center;
         font-size: 1.4em;
         font-weight: 500;
-        padding: 20px;
-        border-radius: 10px;
-        margin-top: 25px;
-        backdrop-filter: blur(6px);
+        padding: 18px;
+        border-radius: 12px;
+        margin-top: 20px;
+        color: #ffffff;
     }
     .real {
-        background: rgba(0, 128, 0, 0.3);
-        border: 1px solid #00e676;
-        color: #00ff99;
+        background-color: rgba(26, 115, 232, 0.7);
+        border: 1px solid #1a73e8;
     }
     .fake {
-        background: rgba(139, 0, 0, 0.3);
-        border: 1px solid #ff4d4d;
-        color: #ff8080;
+        background-color: rgba(220, 53, 69, 0.7);
+        border: 1px solid #dc3545;
     }
 
-    /* Examples */
-    .example-info {
-        background: rgba(255,255,255,0.1);
-        padding: 12px;
-        border-radius: 6px;
-        margin-top: 8px;
-        font-size: 0.9em;
-        color: #f1f1f1;
-    }
-
-    /* Footer */
     .footer {
         text-align: center;
-        font-size: 0.85em;
-        color: #cccccc;
-        margin-top: 60px;
-        padding: 15px 0;
-        border-top: 1px solid rgba(255,255,255,0.2);
+        font-size: 0.9em;
+        color: #bbbbbb;
+        margin-top: 35px;
+        padding-top: 15px;
+        border-top: 1px solid #555555;
     }
+
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# ------------------ Main Title ------------------
+# ------------------ Sidebar ------------------
+with st.sidebar:
+    st.markdown("<h3>About the App</h3>", unsafe_allow_html=True)
+    st.info("This app uses a machine learning model to classify news articles as Real or Fake.")
+    st.markdown("<p>Developer: <strong>Umaima Qureshi</strong></p>", unsafe_allow_html=True)
+    st.markdown("<p>Dataset: <a href='https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset' target='_blank'>Kaggle Fake & Real News</a></p>", unsafe_allow_html=True)
+    st.markdown("<p>Tech: Python, Scikit-learn, Streamlit</p>", unsafe_allow_html=True)
+
+# ------------------ Main Container ------------------
+st.markdown("<div class='main-container'>", unsafe_allow_html=True)
+
 st.markdown("<div class='main-title'>Fake News Detector</div>", unsafe_allow_html=True)
-st.markdown("<div class='subtitle'>Verify the authenticity of news articles with advanced machine learning.</div>", unsafe_allow_html=True)
+st.markdown("<div class='subtitle'>Verify the authenticity of news articles quickly and reliably.</div>", unsafe_allow_html=True)
 
-# ------------------ Input ------------------
-user_input = st.text_area(
-    "Paste or type the news article here:",
-    placeholder="Enter the headline or full text for analysis...",
-    height=150
-)
+# Input
+user_input = st.text_area("Enter news headline or article here:")
 
-# ------------------ Prediction ------------------
+# Prediction
 if st.button("Analyze News"):
     if not user_input.strip():
-        st.warning("Please provide some text to analyze.")
+        st.warning("Please provide text to analyze.")
     elif model is None or vectorizer is None:
-        st.error("Model loading failed. Please contact support.")
+        st.error("Model not loaded. Check deployment.")
     else:
-        with st.spinner("Analyzing the content..."):
+        with st.spinner("Analyzing..."):
             result = predict_news(user_input)
             if result is True:
-                st.markdown("<div class='result-box real'>This appears to be <strong>Real News</strong></div>", unsafe_allow_html=True)
+                st.markdown("<div class='result-box real'>This appears to be Real News – Credible and trustworthy.</div>", unsafe_allow_html=True)
             elif result is False:
-                st.markdown("<div class='result-box fake'>This seems like <strong>Fake News</strong></div>", unsafe_allow_html=True)
+                st.markdown("<div class='result-box fake'>This seems like Fake News – Be cautious.</div>", unsafe_allow_html=True)
             else:
-                st.error("Analysis failed. Please try again.")
+                st.error("Prediction failed. Please try again.")
 
-# ------------------ Examples ------------------
-st.subheader("Try with Examples")
+# Examples
+st.markdown("<h4>Try Examples</h4>", unsafe_allow_html=True)
 col1, col2 = st.columns(2)
 
 with col1:
-    if st.button("Real News Example"):
+    if st.button("Real News Example", key="real"):
         example_text = "Economic growth rises by 2.3% in the third quarter, according to official government statistics."
-        st.markdown(f"<div class='example-info'>{example_text}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='background-color:#1c1c1c;padding:10px;border-radius:6px;color:#fff;'>{example_text}</div>", unsafe_allow_html=True)
         res = predict_news(example_text)
-        st.success("Real News" if res else "Fake News")
+        if res is True:
+            st.success("Detected as Real News")
+        elif res is False:
+            st.error("Detected as Fake News")
+        else:
+            st.error("Prediction failed")
 
 with col2:
-    if st.button("Fake News Example"):
+    if st.button("Fake News Example", key="fake"):
         example_text = "Breaking: New study confirms consuming chocolate cures diabetes overnight!"
-        st.markdown(f"<div class='example-info'>{example_text}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='background-color:#1c1c1c;padding:10px;border-radius:6px;color:#fff;'>{example_text}</div>", unsafe_allow_html=True)
         res = predict_news(example_text)
-        st.success("Real News" if res else "Fake News")
+        if res is True:
+            st.success("Detected as Real News (unexpected)")
+        elif res is False:
+            st.error("Detected as Fake News")
+        else:
+            st.error("Prediction failed")
 
-# ------------------ Footer ------------------
-st.markdown(
-    """
-    <div class='footer'>
-    © 2025 Fake News Detector | Developed by Umaima Qureshi | For educational use
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown("</div>", unsafe_allow_html=True)  # close main container
+
+# Footer
+st.markdown("<div class='footer'>Open-source project for educational purposes.<br>Developed by Umaima Qureshi | Streamlit & ML Enthusiast</div>", unsafe_allow_html=True)
+
+
 
 
 
