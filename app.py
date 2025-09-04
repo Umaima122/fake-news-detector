@@ -36,124 +36,133 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
     .stApp {
-        background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
-        font-family: 'Inter', sans-serif;
-        color: #e0e0e0;
+        background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        font-family: 'Poppins', sans-serif;
+        color: #ffffff;
         overflow-x: hidden;
     }
 
     .main-container {
-        background-color: rgba(255, 255, 255, 0.05);
-        border-radius: 20px;
-        padding: 40px;
-        margin: 40px auto;
-        max-width: 1100px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.08);
+        border-radius: 25px;
+        padding: 50px;
+        margin: 50px auto;
+        max-width: 1200px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255,255,255,0.1);
     }
 
     .main-title {
         text-align: center;
-        font-size: 2.8em;
+        font-size: 3em;
         font-weight: 700;
         color: #ffffff;
-        margin-bottom: 10px;
-        letter-spacing: -0.5px;
+        margin-bottom: 15px;
+        letter-spacing: -1px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
     .subtitle {
         text-align: center;
-        font-size: 1.3em;
-        font-weight: 400;
-        color: #b0b0b0;
-        margin-bottom: 30px;
+        font-size: 1.4em;
+        font-weight: 300;
+        color: #d0d0d0;
+        margin-bottom: 40px;
     }
 
     textarea {
-        border-radius: 12px !important;
-        border: 1px solid #404040 !important;
+        border-radius: 15px !important;
+        border: 1px solid #505050 !important;
         font-size: 16px !important;
-        padding: 15px !important;
-        background-color: #252525;
+        padding: 20px !important;
+        background-color: #1e1e1e;
         color: #ffffff;
         resize: vertical;
-        min-height: 150px;
+        min-height: 200px;
+        box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
     }
     textarea:focus {
-        border-color: #4a90e2 !important;
-        box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.2) !important;
+        border-color: #6a5acd !important;
+        box-shadow: 0 0 0 4px rgba(106,90,205,0.3) !important;
     }
 
     div.stButton > button {
-        background-color: #4a90e2;
+        background: linear-gradient(135deg, #6a5acd 0%, #483d8b 100%);
         color: white;
-        border-radius: 10px;
-        padding: 14px 30px;
-        font-size: 16px;
+        border-radius: 12px;
+        padding: 15px 35px;
+        font-size: 18px;
         font-weight: 600;
         border: none;
         transition: all 0.3s ease;
         width: 100%;
+        margin-top: 20px;
     }
     div.stButton > button:hover {
-        background-color: #3a7bc8;
-        transform: translateY(-3px);
-        box-shadow: 0 6px 15px rgba(74, 144, 226, 0.3);
+        background: linear-gradient(135deg, #5a4ab8 0%, #3a2f7a 100%);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(106,90,205,0.4);
     }
 
     .result-box {
         text-align: center;
-        font-size: 1.5em;
+        font-size: 1.6em;
         font-weight: 600;
-        padding: 20px;
-        border-radius: 15px;
-        margin-top: 25px;
+        padding: 25px;
+        border-radius: 18px;
+        margin-top: 30px;
         color: #ffffff;
-        animation: fadeIn 0.5s ease-in-out;
+        animation: fadeIn 0.6s ease-in-out;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     }
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
+        from { opacity: 0; transform: translateY(15px); }
         to { opacity: 1; transform: translateY(0); }
     }
     .real {
-        background-color: rgba(74, 144, 226, 0.8);
-        border: 1px solid #4a90e2;
+        background: linear-gradient(135deg, #32cd32 0%, #228b22 100%);
+        border: 1px solid #228b22;
     }
     .fake {
-        background-color: rgba(255, 82, 82, 0.8);
-        border: 1px solid #ff5252;
+        background: linear-gradient(135deg, #ff4500 0%, #cc3300 100%);
+        border: 1px solid #cc3300;
     }
 
     .footer {
         text-align: center;
-        font-size: 0.95em;
-        color: #888888;
-        margin-top: 40px;
-        padding-top: 20px;
+        font-size: 1em;
+        color: #a0a0a0;
+        margin-top: 50px;
+        padding-top: 25px;
         border-top: 1px solid #404040;
     }
 
     .example-box {
         background-color: #252525;
-        padding: 15px;
-        border-radius: 10px;
+        padding: 20px;
+        border-radius: 12px;
         color: #ffffff;
-        font-size: 14px;
-        margin-bottom: 15px;
+        font-size: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
     }
 
     h4 {
         color: #ffffff;
         font-weight: 600;
-        margin-top: 30px;
-        margin-bottom: 15px;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        font-size: 1.8em;
     }
 
     .stColumn > div > div > div > div > button {
         width: 100%;
-        margin-top: 10px;
+        margin-top: 15px;
+        font-size: 16px;
+        padding: 12px 25px;
     }
 
     .sidebar .stMarkdown {
@@ -162,14 +171,23 @@ st.markdown(
 
     .sidebar h3 {
         color: #ffffff;
+        font-weight: 600;
     }
 
     a {
-        color: #4a90e2;
+        color: #6a5acd;
         text-decoration: none;
+        font-weight: 500;
     }
     a:hover {
         text-decoration: underline;
+        color: #5a4ab8;
+    }
+
+    /* Ensure consistent button sizes in columns */
+    .stButton {
+        display: flex;
+        justify-content: center;
     }
 
     </style>
@@ -242,9 +260,6 @@ st.markdown("</div>", unsafe_allow_html=True)  # close main container
 
 # Footer
 st.markdown("<div class='footer'>Open-source project for educational purposes.<br>Developed by Umaima Qureshi | Streamlit & ML Enthusiast</div>", unsafe_allow_html=True)
-
-
-
 
 
 
