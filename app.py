@@ -36,94 +36,140 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
     .stApp {
-        background: url("mimi.png") no-repeat center center fixed;
-        background-size: cover;
-        font-family: 'Roboto', sans-serif;
-        color: #f0f0f0;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+        font-family: 'Inter', sans-serif;
+        color: #e0e0e0;
         overflow-x: hidden;
     }
 
     .main-container {
-        background-color: rgba(0, 0, 0, 0.65);
-        border-radius: 15px;
-        padding: 30px;
-        margin: 30px auto;
-        max-width: 1000px;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        padding: 40px;
+        margin: 40px auto;
+        max-width: 1100px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        backdrop-filter: blur(10px);
     }
 
     .main-title {
         text-align: center;
-        font-size: 2.6em;
+        font-size: 2.8em;
         font-weight: 700;
         color: #ffffff;
         margin-bottom: 10px;
+        letter-spacing: -0.5px;
     }
     .subtitle {
         text-align: center;
-        font-size: 1.2em;
+        font-size: 1.3em;
         font-weight: 400;
-        color: #d0d0d0;
-        margin-bottom: 25px;
+        color: #b0b0b0;
+        margin-bottom: 30px;
     }
 
     textarea {
-        border-radius: 10px !important;
-        border: 1px solid #cccccc !important;
-        font-size: 15px !important;
-        padding: 12px !important;
-        background-color: #1c1c1c;
+        border-radius: 12px !important;
+        border: 1px solid #404040 !important;
+        font-size: 16px !important;
+        padding: 15px !important;
+        background-color: #252525;
         color: #ffffff;
+        resize: vertical;
+        min-height: 150px;
     }
     textarea:focus {
-        border-color: #1a73e8 !important;
-        box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2) !important;
+        border-color: #4a90e2 !important;
+        box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.2) !important;
     }
 
     div.stButton > button {
-        background-color: #1a73e8;
+        background-color: #4a90e2;
         color: white;
-        border-radius: 8px;
-        padding: 12px 25px;
+        border-radius: 10px;
+        padding: 14px 30px;
         font-size: 16px;
-        font-weight: 500;
+        font-weight: 600;
         border: none;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: all 0.3s ease;
+        width: 100%;
     }
     div.stButton > button:hover {
-        background-color: #1669c1;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        background-color: #3a7bc8;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(74, 144, 226, 0.3);
     }
 
     .result-box {
         text-align: center;
-        font-size: 1.4em;
-        font-weight: 500;
-        padding: 18px;
-        border-radius: 12px;
-        margin-top: 20px;
+        font-size: 1.5em;
+        font-weight: 600;
+        padding: 20px;
+        border-radius: 15px;
+        margin-top: 25px;
         color: #ffffff;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
     }
     .real {
-        background-color: rgba(26, 115, 232, 0.7);
-        border: 1px solid #1a73e8;
+        background-color: rgba(74, 144, 226, 0.8);
+        border: 1px solid #4a90e2;
     }
     .fake {
-        background-color: rgba(220, 53, 69, 0.7);
-        border: 1px solid #dc3545;
+        background-color: rgba(255, 82, 82, 0.8);
+        border: 1px solid #ff5252;
     }
 
     .footer {
         text-align: center;
-        font-size: 0.9em;
-        color: #bbbbbb;
-        margin-top: 35px;
-        padding-top: 15px;
-        border-top: 1px solid #555555;
+        font-size: 0.95em;
+        color: #888888;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #404040;
+    }
+
+    .example-box {
+        background-color: #252525;
+        padding: 15px;
+        border-radius: 10px;
+        color: #ffffff;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    h4 {
+        color: #ffffff;
+        font-weight: 600;
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+
+    .stColumn > div > div > div > div > button {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .sidebar .stMarkdown {
+        color: #d0d0d0;
+    }
+
+    .sidebar h3 {
+        color: #ffffff;
+    }
+
+    a {
+        color: #4a90e2;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
     }
 
     </style>
@@ -171,7 +217,7 @@ col1, col2 = st.columns(2)
 with col1:
     if st.button("Real News Example", key="real"):
         example_text = "Economic growth rises by 2.3% in the third quarter, according to official government statistics."
-        st.markdown(f"<div style='background-color:#1c1c1c;padding:10px;border-radius:6px;color:#fff;'>{example_text}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='example-box'>{example_text}</div>", unsafe_allow_html=True)
         res = predict_news(example_text)
         if res is True:
             st.success("Detected as Real News")
@@ -183,7 +229,7 @@ with col1:
 with col2:
     if st.button("Fake News Example", key="fake"):
         example_text = "Breaking: New study confirms consuming chocolate cures diabetes overnight!"
-        st.markdown(f"<div style='background-color:#1c1c1c;padding:10px;border-radius:6px;color:#fff;'>{example_text}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='example-box'>{example_text}</div>", unsafe_allow_html=True)
         res = predict_news(example_text)
         if res is True:
             st.success("Detected as Real News (unexpected)")
